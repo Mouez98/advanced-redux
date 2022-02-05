@@ -13,7 +13,7 @@ const Cart = (props) => {
       <h2>Your Shopping Cart</h2>
       <ul>
         {items.length > 0 &&
-          items.map((item, index) => {
+          items.map((item,index) => {
             return (
               <CartItem
                 key={index}

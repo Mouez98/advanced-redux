@@ -7,8 +7,18 @@ import classes from "./ProductItem.module.css";
 const ProductItem = ({ title, price, description, id }) => {
   const dispatch = useDispatch();
 
-  const addItemHandler = () =>
-    dispatch(cartActions.addItem({ title, price, id }));
+    const addToCartHandler = () => {
+      // and then send Http request
+      // fetch('firebase-url', { method: 'POST', body: JSON.stringify(newCart) })
+  
+      dispatch(
+        cartActions.addItem({
+          id,
+          title,
+          price,
+        })
+      );
+    };
 
   return (
     <li className={classes.item}>
@@ -19,7 +29,7 @@ const ProductItem = ({ title, price, description, id }) => {
         </header>
         <p>{description}</p>
         <div className={classes.actions}>
-          <button onClick={addItemHandler}>Add to Cart</button>
+          <button onClick={addToCartHandler}>Add to Cart</button>
         </div>
       </Card>
     </li>
