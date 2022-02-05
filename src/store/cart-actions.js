@@ -14,7 +14,10 @@ export const sendCartData = (cart) => {
         "https://food-order-2a829-default-rtdb.europe-west1.firebasedatabase.app/cart.json",
         {
           method: "PUT",
-          body: JSON.stringify(cart),
+          body: JSON.stringify({
+            items: cart.items,
+            totalQuantity: cart.totalQuantity,
+          }),
         }
       );
 
@@ -46,18 +49,22 @@ export const sendCartData = (cart) => {
 export const fetchData = () => {
   return async (dispatch) => {
     const sendRequest = async () => {
-      const response = await fetch("https://food-order-2a829-default-rtdb.europe-west1.firebasedatabase.app/cart.json" );   
-     
+      const response = await fetch(
+        "https://food-order-2a829-default-rtdb.europe-west1.firebasedatabase.app/cart.json"
+      );
+
       if (!response.ok) {
         throw new Error("Failed to fetch cart data!");
       }
       const data = await response.json();
-      console.log(data);
       return data;
     };
     try {
       const cartData = await sendRequest();
-      dispatch(cartActions.replaceCart(cartData));
+      dispatch(cartActions.replaceCart({
+        items: cartData.items || [],
+        totalQuantity: cartData.totalQuantity
+      }));
     } catch (error) {
       console.log(error);
       dispatch(

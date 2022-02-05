@@ -18,7 +18,7 @@ function App() {
   },[dispatch])
 
   useEffect(() => {
-    if (cart.totalQuantity !== 0) {
+    if ((cart.totalQuantity !== 0) && cart.changed) {
       dispatch(sendCartData(cart))
     }  
   }, [cart, dispatch]);
